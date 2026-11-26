@@ -567,7 +567,7 @@ const quizData = [
   {
     question: "O que a palavra 'Paiter' significa na língua Suruí?",
     options: [
-      "Gatede de Verdade / Nós mesmos",
+      "Gente de Verdade / Nós mesmos",
       "Protetores da Floresta",
       "Povos das Águas",
       "Guardiões do Fogo"
@@ -665,13 +665,14 @@ renderBooks();
 loadQuiz();
 </script>
 
-<!-- SCRIPT DO FIREBASE (FIRESTORE + AUTH) -->
+<!-- SCRIPT DO FIREBASE (FIRESTORE + AUTH COM REDIRECIONAMENTO PARA CELULAR) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
   import {
     getAuth,
     GoogleAuthProvider,
-    signInWithPopup,
+    signInWithRedirect,
+    getRedirectResult,
     signOut,
     onAuthStateChanged
   } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
@@ -679,7 +680,6 @@ loadQuiz();
     getFirestore,
     collection,
     getDocs,
-    addQuery,
     addDoc,
     deleteDoc,
     doc
@@ -708,7 +708,6 @@ loadQuiz();
       const querySnapshot = await getDocs(collection(db, "livros"));
       querySnapshot.forEach((documento) => {
         const dados = documento.data();
-        // Evitar duplicatas se já existirem no array padrão
         if (!books.some(b => b.title === dados.title)) {
           books.push({
             id: documento.id,
@@ -731,10 +730,20 @@ loadQuiz();
 
   carregarLivrosDoBanco();
 
+  // Processa o resultado do login ao retornar da página do Google
+  getRedirectResult(auth)
+    .then((result) => {
+      if (result && result.user) {
+        console.log("Login realizado com sucesso:", result.user.email);
+      }
+    })
+    .catch((error) => {
+      console.error("Erro no redirecionamento:", error);
+    });
+
   window.demoLogin = async function () {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      alert("Você entrou com sucesso: " + result.user.email);
+      await signInWithRedirect(auth, googleProvider);
     } catch (error) {
       console.error(error);
       alert("Erro no login: " + error.message);
@@ -782,10 +791,7 @@ loadQuiz();
     };
 
     try {
-      // Salva no Firestore permanentemente
       const docRef = await addDoc(collection(db, "livros"), novoLivro);
-      
-      // Adiciona na lista visual e atualiza
       books.push({
         id: docRef.id,
         ...novoLivro,
@@ -824,7 +830,7 @@ loadQuiz();
     } else {
       window.isAdminUser = false;
       if (note) {
-        note.noteText = "Login seguro conectado ao Firebase. Entre com Google para acessar sua conta.";
+        note.textContent = "Login seguro conectado ao Firebase. Entre com Google para acessar sua conta.";
       }
       if (btnLogin) btnLogin.style.display = "inline-block";
       if (btnLogout) btnLogout.style.display = "none";
