@@ -93,12 +93,24 @@ h1 span{color:#8b9f83}
 .pillar{padding:22px;background:white;border:1px solid var(--border);border-radius:16px}
 .pillar h3{font-size:18px;margin-bottom:10px}
 .pillar p{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* SEÇÃO DE JOGOS EDUCATIVOS */
+.games-section{background:#f4f6ee}
+.quiz-card{background:var(--white);border:1px solid var(--border);border-radius:24px;padding:35px;max-width:750px;margin:auto;box-shadow:0 10px 25px rgba(44,62,45,0.04)}
+.quiz-question{font-family:Lora,serif;font-size:22px;margin-bottom:20px;color:var(--moss)}
+.quiz-options{display:grid;gap:12px;margin-bottom:25px}
+.quiz-option{background:var(--paper);border:1px solid var(--border);border-radius:14px;padding:14px 18px;text-align:left;font-weight:500;transition:.2s}
+.quiz-option:hover{background:var(--sage);border-color:var(--sage-dark)}
+.quiz-option.correct{background:#d4e2d4;border-color:#2c3e2d;color:#2c3e2d;font-weight:700}
+.quiz-option.wrong{background:#f2e1d9;border-color:#e6b8a2;color:#533b30}
+.quiz-score{font-weight:700;font-size:18px;color:#748b72;margin-bottom:15px}
+
 .login-section{background:#e9eee4}
 .login-box{max-width:650px;margin:auto;text-align:center;background:var(--white);border:1px solid var(--border);border-radius:25px;padding:38px}
 .login-box h2{font-size:32px;margin-bottom:12px}
 .login-box p{color:var(--muted);line-height:1.7;margin-bottom:22px}
 .login-options{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.note{font-size:11px!important;margin-top:20px!important}
+.note{font-size:12px!important;margin-top:20px!important;font-weight:500}
 .admin{display:none;padding:50px 0}
 .admin.show{display:block}
 .admin-box{border:1px solid var(--border);background:white;border-radius:20px;padding:25px}
@@ -161,6 +173,7 @@ footer p{font-size:12px;line-height:1.8;color:#c8d2c5}
       <a href="#inicio">Início</a>
       <a href="#acervo">Acervo</a>
       <a href="#sobre">Sobre</a>
+      <a href="#jogos">Jogos</a>
       <a href="#login">Entrar</a>
     </div>
 
@@ -182,7 +195,7 @@ footer p{font-size:12px;line-height:1.8;color:#c8d2c5}
     </p>
     <div class="hero-actions">
       <a class="btn gold" href="#acervo">Explorar o acervo</a>
-      <a class="btn secondary" href="#sobre">Conheça o projeto</a>
+      <a class="btn secondary" href="#jogos">Jogos educativos</a>
     </div>
   </div>
 
@@ -241,6 +254,25 @@ footer p{font-size:12px;line-height:1.8;color:#c8d2c5}
 </div>
 </section>
 
+<section class="section games-section" id="jogos">
+<div class="container">
+  <div class="section-head" style="text-align: center; margin-bottom: 40px;">
+    <div style="width: 100%;">
+      <div class="eyebrow">Aprenda brincando</div>
+      <h2>Desafio Paiter Suruí</h2>
+      <p style="margin: auto; margin-top: 10px;">Teste seus conhecimentos sobre a história, a cultura e a tradição do povo Paiter Suruí.</p>
+    </div>
+  </div>
+
+  <div class="quiz-card" id="quizCard">
+    <div class="quiz-score" id="quizScore">Pergunta 1 de 4</div>
+    <div class="quiz-question" id="quizQuestion">Carregando pergunta...</div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <button class="btn" id="nextQuizBtn" style="display:none; width: 100%; margin-top: 15px;" onclick="nextQuestion()">Próxima Pergunta</button>
+  </div>
+</div>
+</section>
+
 <section class="section" id="sobre">
 <div class="container">
   <div class="about-grid">
@@ -276,21 +308,6 @@ footer p{font-size:12px;line-height:1.8;color:#c8d2c5}
       </div>
     </div>
   </div>
-
-  <div class="pillars">
-    <div class="pillar">
-      <h3>Autoria e voz</h3>
-      <p>Dar visibilidade a obras e materiais que reconhecem autoria e protagonismo indígena.</p>
-    </div>
-    <div class="pillar">
-      <h3>Referências reais</h3>
-      <p>Indicar fontes identificáveis, bibliotecas, editoras e instituições sempre que possível.</p>
-    </div>
-    <div class="pillar">
-      <h3>Educação respeitosa</h3>
-      <p>Promover curiosidade e conhecimento sem generalizações ou estereótipos.</p>
-    </div>
-  </div>
 </div>
 </section>
 
@@ -300,16 +317,16 @@ footer p{font-size:12px;line-height:1.8;color:#c8d2c5}
     <div class="eyebrow">Sua biblioteca pessoal</div>
     <h2>Continue sua jornada</h2>
     <p>
-      Em versões futuras, leitores poderão criar listas,
-      guardar favoritos e acompanhar suas leituras.
+      Entre com sua conta Google para salvar seus favoritos
+      e acompanhar suas leituras na biblioteca.
     </p>
     <div class="login-options">
-      <button class="btn" onclick="demoLogin()">Entrar / criar conta</button>
-      <button class="btn secondary" onclick="adminDemo()">Área administrativa</button>
+      <button class="btn" id="btnLogin" onclick="demoLogin()">Entrar com Google</button>
+      <button class="btn secondary" id="btnLogout" onclick="logoutFirebase()" style="display:none;">Sair da conta</button>
+      <button class="btn gold" id="btnAdmin" onclick="adminDemo()" style="display:none;">Área administrativa</button>
     </div>
     <p class="note">
-      Demonstração visual. Login seguro e banco de dados ainda
-      não estão conectados nesta versão.
+      Login seguro conectado ao Firebase. Entre com Google para acessar sua conta.
     </p>
   </div>
 </div>
@@ -317,10 +334,10 @@ footer p{font-size:12px;line-height:1.8;color:#c8d2c5}
 
 <section class="admin" id="admin">
 <div class="container">
-  <div class="eyebrow">Demonstração de administração</div>
-  <h2 style="margin-bottom:20px">Painel de gestão</h2>
+  <div class="eyebrow">Acesso restrito</div>
+  <h2 style="margin-bottom:20px">Painel de gestão (Banco Permanente)</h2>
   <div class="admin-box">
-    <h3>Adicionar recomendação (teste local)</h3>
+    <h3>Adicionar novo livro ao banco de dados</h3>
     <form id="bookForm">
       <label>Título</label>
       <input id="newTitle" required>
@@ -338,7 +355,7 @@ footer p{font-size:12px;line-height:1.8;color:#c8d2c5}
       <input id="newDesc" required>
       <label>Link de referência</label>
       <input id="newLink" type="url" placeholder="https://">
-      <button class="btn" type="submit">Adicionar à demonstração</button>
+      <button class="btn" type="submit">Salvar Livro Permanentemente</button>
     </form>
     <div class="admin-list" id="adminList"></div>
   </div>
@@ -367,9 +384,11 @@ footer p{font-size:12px;line-height:1.8;color:#c8d2c5}
   </div>
 </div>
 
+<!-- SCRIPTS DA BIBLIOTECA E JOGO -->
 <script>
-const books = [
+let books = [
 {
+ id:"default-1",
  title:"Histórias do começo e do fim do mundo: o contato do povo Paiter Suruí",
  author:"Ângela Pappiani e Inimá Lacerda (organização)",
  category:"História",
@@ -380,6 +399,7 @@ const books = [
  badge:"Narrativas e memória"
 },
 {
+ id:"default-2",
  title:"A Cerâmica do Povo Paiter Suruí de Rondônia",
  author:"Jean-Jacques Armand Vidal",
  category:"Cultura",
@@ -390,6 +410,7 @@ const books = [
  badge:"Biblioteca digital USP"
 },
 {
+ id:"default-3",
  title:"Etnomatemática e Educação Escolar Indígena Paiter Suruí",
  author:"José Roberto Linhares de Matos e Antonio Ferreira Neto",
  category:"Educação",
@@ -400,6 +421,7 @@ const books = [
  badge:"Material educativo"
 },
 {
+ id:"default-4",
  title:"Os Paiter Suruí: do arco e flechas às tecnologias do século XXI",
  author:"Zeus Moreno Romero",
  category:"História",
@@ -410,6 +432,7 @@ const books = [
  badge:"História contemporânea"
 },
 {
+ id:"default-5",
  title:"Paiter Suruí, Gente de Verdade: um projeto do Coletivo Lakapoy",
  author:"Txai Suruí, Lahayda Mamani Poma e Thyago Nogueira (organizadores)",
  category:"Cultura",
@@ -420,6 +443,7 @@ const books = [
  badge:"Coletivo indígena"
 },
 {
+ id:"default-6",
  title:"Vozes da origem: estórias sem escrita",
  author:"Betty Mindlin e narradores Suruí",
  category:"Literatura",
@@ -433,6 +457,7 @@ const books = [
 
 let selected="Todos";
 let favorites=JSON.parse(localStorage.getItem("paiterFavorites")||"[]");
+window.isAdminUser = false;
 
 function renderBooks(){
  const term=document.getElementById("search").value.toLowerCase();
@@ -448,9 +473,10 @@ function renderBooks(){
  grid.innerHTML=filtered.map((b)=>{
   const i=books.indexOf(b);
   const fav=favorites.includes(i);
+  const coverClass = b.cover || "one";
   return `
   <article class="book">
-   <div class="cover ${b.cover}">
+   <div class="cover ${coverClass}">
     <div>
      <h3>${b.title}</h3>
      <small>${b.year||"Material recomendado"}</small>
@@ -461,7 +487,7 @@ function renderBooks(){
     <div class="book-title">${b.title}</div>
     <div class="book-author">${b.author}</div>
     <p class="book-desc">${b.desc}</p>
-    <span class="seal">✓ ${b.badge}</span>
+    <span class="seal">✓ ${b.badge || "Acervo Paiter"}</span>
     <div class="book-actions">
      <button onclick="details(${i})">Ver detalhes</button>
      <button class="fav" onclick="favorite(${i})" aria-label="Favoritar">${fav?"♥":"♡"}</button>
@@ -494,7 +520,7 @@ function details(i){
   <h2>${b.title}</h2>
   <strong>${b.author}</strong>
   <p>${b.desc}</p>
-  <p><strong>Curadoria:</strong> ${b.badge}</p>
+  <p><strong>Curadoria:</strong> ${b.badge || "Acervo Paiter"}</p>
   <p>Confira a referência externa para mais informações sobre a obra.</p>
   <a href="${b.link}" target="_blank" rel="noopener">Abrir fonte / publicação ↗</a>
  `;
@@ -505,11 +531,11 @@ function closeModal(e){
  if(!e||e.target.id==="modal")document.getElementById("modal").classList.remove("open");
 }
 
-function demoLogin(){
- alert("Esta é uma demonstração. O sistema de login ainda precisa ser conectado a um serviço de autenticação seguro.");
-}
-
 function adminDemo(){
+ if(!window.isAdminUser){
+  alert("Acesso negado. Apenas a administradora autorizada pode abrir este painel.");
+  return;
+ }
  const section=document.getElementById("admin");
  section.classList.toggle("show");
  section.scrollIntoView({behavior:"smooth"});
@@ -521,37 +547,292 @@ function renderAdmin(){
  list.innerHTML=books.map((b,i)=>`
   <div class="admin-item">
    <span><strong>${b.title}</strong><br><small>${b.author}</small></span>
-   <button onclick="removeBook(${i})">Remover</button>
+   <button onclick="removeBookFromDB('${b.id}', ${i})">Remover</button>
   </div>
  `).join("");
 }
 
-function removeBook(i){
- if(confirm("Remover este livro da demonstração?")){
-  books.splice(i,1);
-  renderBooks();
-  renderAdmin();
- }
+// ---- LÓGICA DO QUIZ EDUCATIVO ----
+const quizData = [
+  {
+    question: "Onde vive tradicionalmente o povo Paiter Suruí?",
+    options: [
+      "Na Terra Indígena Sete de Setembro (Rondônia / Mato Grosso)",
+      "No litoral da Região Nordeste",
+      "Na Região Metropolitana de São Paulo",
+      "Nas margens do Rio São Francisco"
+    ],
+    correct: 0
+  },
+  {
+    question: "O que a palavra 'Paiter' significa na língua Suruí?",
+    options: [
+      "Gatede de Verdade / Nós mesmos",
+      "Protetores da Floresta",
+      "Povos das Águas",
+      "Guardiões do Fogo"
+    ],
+    correct: 0
+  },
+  {
+    question: "Qual o principal objetivo desta Biblioteca de Saberes?",
+    options: [
+      "Aproximar estudantes de materiais confiáveis valorizando a autoria indígena",
+      "Vender livros impressos",
+      "Apenas divulgar notícias diárias",
+      "Cadastrar receitas culinárias"
+    ],
+    correct: 0
+  },
+  {
+    question: "As obras e pesquisas reunidas no acervo abordam principalmente:",
+    options: [
+      "História, cultura, língua e literatura Paiter Suruí",
+      "História do cinema internacional",
+      "Tecnologia espacial avançada",
+      "Fisiculturismo e esportes olímpicos"
+    ],
+    correct: 0
+  }
+];
+
+let currentQuizIndex = 0;
+let score = 0;
+
+function loadQuiz() {
+  const q = quizData[currentQuizIndex];
+  document.getElementById("quizScore").textContent = `Questão ${currentQuizIndex + 1} de ${quizData.length}`;
+  document.getElementById("quizQuestion").textContent = q.question;
+  
+  const optionsEl = document.getElementById("quizOptions");
+  optionsEl.innerHTML = "";
+  
+  q.options.forEach((opt, index) => {
+    const btn = document.createElement("button");
+    btn.className = "quiz-option";
+    btn.textContent = opt;
+    btn.onclick = () => selectQuizOption(index, btn);
+    optionsEl.appendChild(btn);
+  });
+  
+  document.getElementById("nextQuizBtn").style.display = "none";
 }
 
-document.getElementById("bookForm").addEventListener("submit",e=>{
- e.preventDefault();
- books.push({
-  title:document.getElementById("newTitle").value,
-  author:document.getElementById("newAuthor").value,
-  category:document.getElementById("newCategory").value,
-  desc:document.getElementById("newDesc").value,
-  link:document.getElementById("newLink").value,
-  cover:"one",
-  badge:"Adicionado na demonstração"
- });
- e.target.reset();
- renderBooks();
- renderAdmin();
- alert("Livro adicionado nesta demonstração. O cadastro não é permanente.");
-});
+function selectQuizOption(selectedIndex, btnElement) {
+  const q = quizData[currentQuizIndex];
+  const allBtns = document.querySelectorAll(".quiz-option");
+  
+  allBtns.forEach(b => b.disabled = true);
+  
+  if (selectedIndex === q.correct) {
+    btnElement.classList.add("correct");
+    score++;
+  } else {
+    btnElement.classList.add("wrong");
+    allBtns[q.correct].classList.add("correct");
+  }
+  
+  document.getElementById("nextQuizBtn").style.display = "block";
+}
+
+function nextQuestion() {
+  currentQuizIndex++;
+  if (currentQuizIndex < quizData.length) {
+    loadQuiz();
+  } else {
+    document.getElementById("quizCard").innerHTML = `
+      <div class="eyebrow" style="text-align:center">Desafio Concluído!</div>
+      <h2 style="text-align:center; margin-bottom:15px">Parabéns!</h2>
+      <p style="text-align:center; font-size:18px; color:var(--moss); margin-bottom:20px;">Você acertou ${score} de ${quizData.length} questões sobre o povo Paiter Suruí.</p>
+      <button class="btn" style="width:100%" onclick="restartQuiz()">Jogar Novamente</button>
+    `;
+  }
+}
+
+function restartQuiz() {
+  currentQuizIndex = 0;
+  score = 0;
+  document.getElementById("quizCard").innerHTML = `
+    <div class="quiz-score" id="quizScore">Pergunta 1 de 4</div>
+    <div class="quiz-question" id="quizQuestion">Carregando pergunta...</div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <button class="btn" id="nextQuizBtn" style="display:none; width: 100%; margin-top: 15px;" onclick="nextQuestion()">Próxima Pergunta</button>
+  `;
+  loadQuiz();
+}
 
 renderBooks();
+loadQuiz();
 </script>
+
+<!-- SCRIPT DO FIREBASE (FIRESTORE + AUTH) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+  import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    addQuery,
+    addDoc,
+    deleteDoc,
+    doc
+  } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyANvZmG8KAZOTJu5YDw0qhxoPhZNWq_qKo",
+    authDomain: "paiter-surui.firebaseapp.com",
+    projectId: "paiter-surui",
+    storageBucket: "paiter-surui.firebasestorage.app",
+    messagingSenderId: "51671679721",
+    appId: "1:51671679721:web:f2cec1f86713f3dc116678",
+    measurementId: "G-Q91NL14KN7"
+  };
+
+  const ADMIN_EMAIL = "nyanakiri@gmail.com";
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const googleProvider = new GoogleAuthProvider();
+
+  // Carregar livros salvos no Firestore ao abrir o site
+  async function carregarLivrosDoBanco() {
+    try {
+      const querySnapshot = await getDocs(collection(db, "livros"));
+      querySnapshot.forEach((documento) => {
+        const dados = documento.data();
+        // Evitar duplicatas se já existirem no array padrão
+        if (!books.some(b => b.title === dados.title)) {
+          books.push({
+            id: documento.id,
+            title: dados.title,
+            author: dados.author,
+            category: dados.category,
+            year: dados.year || "Novo",
+            desc: dados.desc,
+            link: dados.link,
+            cover: "one",
+            badge: dados.badge || "Adicionado pela administração"
+          });
+        }
+      });
+      renderBooks();
+    } catch (e) {
+      console.log("Erro ao carregar do Firestore (usando padrão local):", e);
+    }
+  }
+
+  carregarLivrosDoBanco();
+
+  window.demoLogin = async function () {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      alert("Você entrou com sucesso: " + result.user.email);
+    } catch (error) {
+      console.error(error);
+      alert("Erro no login: " + error.message);
+    }
+  };
+
+  window.logoutFirebase = async function () {
+    await signOut(auth);
+    alert("Você saiu da sua conta.");
+  };
+
+  window.removeBookFromDB = async function(id, index) {
+    if(!window.isAdminUser) return;
+    if(confirm("Tem certeza que deseja remover este livro permanentemente do banco de dados?")) {
+      try {
+        if(!id.startsWith("default-")) {
+          await deleteDoc(doc(db, "livros", id));
+        }
+        books.splice(index, 1);
+        renderBooks();
+        renderAdmin();
+        alert("Livro removido com sucesso!");
+      } catch(e) {
+        alert("Erro ao remover: " + e.message);
+      }
+    }
+  }
+
+  document.getElementById("bookForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    if(!window.isAdminUser){
+      alert("Acesso negado.");
+      return;
+    }
+
+    const novoLivro = {
+      title: document.getElementById("newTitle").value,
+      author: document.getElementById("newAuthor").value,
+      category: document.getElementById("newCategory").value,
+      desc: document.getElementById("newDesc").value,
+      link: document.getElementById("newLink").value,
+      year: "2026",
+      badge: "Administração Paiter",
+      createdAt: new Date().toISOString()
+    };
+
+    try {
+      // Salva no Firestore permanentemente
+      const docRef = await addDoc(collection(db, "livros"), novoLivro);
+      
+      // Adiciona na lista visual e atualiza
+      books.push({
+        id: docRef.id,
+        ...novoLivro,
+        cover: "one"
+      });
+
+      e.target.reset();
+      renderBooks();
+      renderAdmin();
+      alert("Livro salvo permanentemente no banco de dados!");
+    } catch (erro) {
+      alert("Erro ao salvar no banco de dados: " + erro.message);
+    }
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    const note = document.querySelector(".login-box .note");
+    const btnLogin = document.getElementById("btnLogin");
+    const btnLogout = document.getElementById("btnLogout");
+    const btnAdmin = document.getElementById("btnAdmin");
+    const adminSection = document.getElementById("admin");
+
+    if (user) {
+      if (note) note.textContent = "Conectada: " + user.email;
+      if (btnLogin) btnLogin.style.display = "none";
+      if (btnLogout) btnLogout.style.display = "inline-block";
+
+      if (user.email === ADMIN_EMAIL) {
+        window.isAdminUser = true;
+        if (btnAdmin) btnAdmin.style.display = "inline-block";
+      } else {
+        window.isAdminUser = false;
+        if (btnAdmin) btnAdmin.style.display = "none";
+        if (adminSection) adminSection.classList.remove("show");
+      }
+    } else {
+      window.isAdminUser = false;
+      if (note) {
+        note.noteText = "Login seguro conectado ao Firebase. Entre com Google para acessar sua conta.";
+      }
+      if (btnLogin) btnLogin.style.display = "inline-block";
+      if (btnLogout) btnLogout.style.display = "none";
+      if (btnAdmin) btnAdmin.style.display = "none";
+      if (adminSection) adminSection.classList.remove("show");
+    }
+  });
+</script>
+
 </body>
 </html>
